@@ -23,8 +23,8 @@ export default function Home() {
 
   return (
     <div>
-      <div className="grid grid-cols-4 gap-10 max-w-[800px]">
-        {books?.map((book) => (
+      <div className="grid grid-cols-4 gap-10 max-w-[800px] border p-[40px] rounded-xl bg-white shadow-lg">
+        {books?.slice(0, 8).map((book) => (
           <BookCard key={book.id} title={book.title} author={book.author[0]} />
         ))}
       </div>
