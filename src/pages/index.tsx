@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { Tables } from '@/types/supabase';
+import BooksForm from '@/components/BooksForm';
 
 const fetchBooks = async (): Promise<Book[]> => {
   const { data } = await axios.get('/api/books'); // /api/books로 GET 요청
@@ -29,6 +30,10 @@ export default function Home() {
           </li>
         ))}
       </ul>
+      <h1>form</h1>
+      <div>
+        <BooksForm />
+      </div>
     </div>
   );
 }
