@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { Tables } from '@/types/supabase';
-import BooksForm from '@/components/BooksForm';
+// import BooksForm from '@/components/BooksForm';
+import BookCard from '@/components/BookCard';
 
 const fetchBooks = async (): Promise<Book[]> => {
   const { data } = await axios.get('/api/books'); // /api/books로 GET 요청
@@ -22,18 +23,14 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Books</h1>
-      <ul>
-        {books?.map((book: { id: number; title: string; author: string[] }) => (
-          <li key={book.id}>
-            {book.title} by {book.author.join(', ')}
-          </li>
+      <div className="grid grid-cols-4 gap-10 max-w-[800px]">
+        {books?.map((book) => (
+          <BookCard key={book.id} title={book.title} author={book.author[0]} />
         ))}
-      </ul>
-      <h1>form</h1>
-      <div>
-        <BooksForm />
       </div>
+      {/* <div>
+        <BooksForm />
+      </div> */}
     </div>
   );
 }
