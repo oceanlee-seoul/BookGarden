@@ -35,15 +35,15 @@ export default function Home() {
         ></input>
         <Button
           onClick={() => {
-            openModal('test');
+            openModal('addBook');
           }}
         >
           책 추가하기
         </Button>
       </div>
       <div className="grid grid-cols-4 gap-10 border p-[40px] rounded-xl bg-white shadow-lg">
-        {books?.slice(0, 8).map((book) => (
-          <BookCard key={book.id} title={book.title} author={book.author[0]} />
+        {books?.map((book) => (
+          <BookCard key={book.id} book={book} />
         ))}
       </div>
       <div className="text-center mt-[20px]">This is Pagination Section</div>
