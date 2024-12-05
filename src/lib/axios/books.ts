@@ -1,8 +1,23 @@
 import axiosInstance from '.';
 import { Book } from '@/types/books';
 
-export const getBooks = async (): Promise<Book[]> => {
-  const response = await axiosInstance.get('/books');
+interface GetBooksResponse {
+  data: Book[];
+  totalCount: number;
+}
+
+export const getTotalCount = async () => {
+  const response = await axiosInstance.get('/books/count');
+  return response.data.totalCount;
+};
+
+export const getBooks = async (
+  page: number,
+  pageSize: number
+): Promise<GetBooksResponse> => {
+  const response = await axiosInstance.get(
+    `/books?page=${page}&pageSize=${pageSize}`
+  );
   return response.data;
 };
 

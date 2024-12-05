@@ -6,14 +6,23 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === 'GET') {
-    // GET: 책 데이터 조회
-    const { data, error } = await supabase.from('books').select('*');
+    const { page = 1, pageSize = 8 } = req.query;
+
+    const offset = (Number(page) - 1) * Number(pageSize);
+    const limit = Number(pageSize);
+
+    const { data, error } = await supabase
+      .from('books')
+      .select('*')
+      .range(offset, offset + limit - 1)
+      .order('id', { ascending: true });
+
     if (error) {
       return res.status(500).json({ message: 'Error fetching books', error });
     }
-    res.status(200).json(data);
+
+    res.status(200).json({ data });
   } else if (req.method === 'POST') {
-    // POST: 새 책 데이터 생성
     const { title, author, publisher, price, stock, description } = req.body;
 
     const { data, error } = await supabase.from('books').insert([
