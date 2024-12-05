@@ -1,17 +1,8 @@
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
-import { Tables } from '@/types/supabase';
-// import BooksForm from '@/components/BooksForm';
 import BookCard from '@/components/BookCard';
 import Button from '@/components/Button';
 import useModal from '@/hooks/useModal';
-
-const fetchBooks = async (): Promise<Book[]> => {
-  const { data } = await axios.get('/api/books'); // /api/books로 GET 요청
-  return data;
-};
-
-type Book = Tables<'books'>;
+import { getBooks } from '@/lib/axios/books';
 
 export default function Home() {
   const { openModal } = useModal();
@@ -20,7 +11,7 @@ export default function Home() {
     data: books,
     isLoading,
     error,
-  } = useQuery({ queryKey: ['books'], queryFn: fetchBooks });
+  } = useQuery({ queryKey: ['books'], queryFn: getBooks });
 
   if (isLoading) return <div>Loading...</div>;
   if (error instanceof Error) return <div>Error: {error.message}</div>;
@@ -47,9 +38,6 @@ export default function Home() {
         ))}
       </div>
       <div className="text-center mt-[20px]">This is Pagination Section</div>
-      {/* <div>
-        <BooksForm />
-      </div> */}
     </div>
   );
 }
