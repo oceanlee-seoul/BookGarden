@@ -1,15 +1,19 @@
 import Image from 'next/image';
-import Button from '../Button';
-import { Tables } from '@/types/supabase';
+import Button from '@/components/Button';
 import useModal from '@/hooks/useModal';
-
-type Book = Tables<'books'>;
+import { Book } from '@/types/books';
 
 export default function BookCard({ book }: { book: Book }) {
   const { openModal } = useModal();
 
   return (
-    <div className="relative w-full pb-[147%] group shadow">
+    <div
+      style={{
+        boxShadow:
+          'rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px',
+      }}
+      className="relative w-full pb-[147%] group"
+    >
       <Image
         src="/james.jpg"
         alt="book"
@@ -22,6 +26,7 @@ export default function BookCard({ book }: { book: Book }) {
         <h1 className="text-lg font-bold">{book.title}</h1>
         <h2 className="text-sm mb-[20px]">{book.author}</h2>
         <Button
+          variant="secondary"
           onClick={() => {
             openModal('detailBook', { book });
           }}

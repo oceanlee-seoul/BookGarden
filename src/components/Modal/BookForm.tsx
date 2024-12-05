@@ -4,6 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import useModal from '@/hooks/useModal';
 import { BookFormProps } from '@/types/books';
+import Button from '@/components/Button';
 
 const BookForm = ({ initData }: BookFormProps) => {
   const queryClient = useQueryClient();
@@ -174,13 +175,8 @@ const BookForm = ({ initData }: BookFormProps) => {
       </div>
 
       {/* 제출 버튼 */}
-      <div className="mt-6">
-        <button
-          type="submit"
-          className="w-full py-2 px-4 bg-gray-900 text-white font-medium rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
-        >
-          {initData ? '수정하기' : '추가하기'}
-        </button>
+      <div className="mt-6 flex justify-end">
+        <Button type="submit">{initData ? '수정하기' : '추가하기'}</Button>
       </div>
     </form>
   );

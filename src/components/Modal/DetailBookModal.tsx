@@ -2,6 +2,7 @@ import useModal from '@/hooks/useModal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBook } from '@/lib/axios/books';
 import { Book } from '@/types/books';
+import Button from '@/components/Button';
 
 export default function DetailBookModal({ book }: { book: Book }) {
   const { openModal, closeModal } = useModal();
@@ -81,22 +82,14 @@ export default function DetailBookModal({ book }: { book: Book }) {
       )}
 
       {/* 버튼 영역 */}
-      <div className="flex justify-end gap-4 mt-4">
+      <div className="flex justify-end gap-2 mt-4">
         {/* 수정하기 버튼 */}
-        <button
-          onClick={handleEditClick}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-        >
-          수정하기
-        </button>
+        <Button onClick={handleEditClick}>수정하기</Button>
 
         {/* 삭제하기 버튼 */}
-        <button
-          onClick={handleDeleteClick}
-          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-500"
-        >
+        <Button variant="negative" onClick={handleDeleteClick}>
           삭제하기
-        </button>
+        </Button>
       </div>
     </div>
   );
