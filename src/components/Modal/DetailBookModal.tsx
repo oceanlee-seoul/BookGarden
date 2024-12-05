@@ -45,7 +45,7 @@ export default function DetailBookModal({ book }: { book: Book }) {
       {/* 저자 */}
       <div className="mb-4">
         <h3 className="font-medium text-gray-700">저자</h3>
-        <p className="text-gray-800">{book.author.join(', ')}</p>
+        <p className="text-gray-800">{book.author}</p>
       </div>
 
       {/* 출판사 */}

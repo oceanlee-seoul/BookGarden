@@ -4,7 +4,7 @@ interface ModifyBookModalProps {
   book: {
     id: string;
     title: string;
-    author: string[];
+    author: string;
     publisher: string;
     price: number;
     stock: number;

@@ -23,7 +23,7 @@ export const getBooks = async (
 
 export const addBook = async (bookData: {
   title: string;
-  author: string[];
+  author: string;
   publisher: string;
   price: number;
   stock: number;
@@ -36,7 +36,7 @@ export const addBook = async (bookData: {
 export const modifyBook = async (bookData: {
   id: string;
   title: string;
-  author: string[];
+  author: string;
   publisher: string;
   price: number;
   stock: number;

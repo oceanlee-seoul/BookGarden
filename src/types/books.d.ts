@@ -5,7 +5,7 @@ export interface BookFormProps {
   initData?: {
     id?: string;
     title: string;
-    author: string[];
+    author: string;
     publisher: string;
     price: number;
     stock: number | string;

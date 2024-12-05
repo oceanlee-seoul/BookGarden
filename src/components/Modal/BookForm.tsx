@@ -11,7 +11,7 @@ const BookForm = ({ initData }: BookFormProps) => {
   const { closeModal } = useModal();
 
   const [title, setTitle] = useState(initData?.title || '');
-  const [author, setAuthor] = useState(initData?.author.join(', ') || '');
+  const [author, setAuthor] = useState(initData?.author || '');
   const [publisher, setPublisher] = useState(initData?.publisher || '');
   const [price, setPrice] = useState<number | string>(initData?.price || '');
   const [stock, setStock] = useState<number | string>(initData?.stock || '');
@@ -46,7 +46,7 @@ const BookForm = ({ initData }: BookFormProps) => {
 
     const bookData = {
       title,
-      author: authors,
+      author,
       publisher,
       price: Number(price),
       stock: Number(stock),
