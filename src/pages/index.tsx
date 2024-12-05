@@ -4,6 +4,7 @@ import { Tables } from '@/types/supabase';
 // import BooksForm from '@/components/BooksForm';
 import BookCard from '@/components/BookCard';
 import Button from '@/components/Button';
+import useModal from '@/hooks/useModal';
 
 const fetchBooks = async (): Promise<Book[]> => {
   const { data } = await axios.get('/api/books'); // /api/books로 GET 요청
@@ -13,6 +14,8 @@ const fetchBooks = async (): Promise<Book[]> => {
 type Book = Tables<'books'>;
 
 export default function Home() {
+  const { openModal } = useModal();
+
   const {
     data: books,
     isLoading,
@@ -30,7 +33,13 @@ export default function Home() {
           type="text"
           placeholder="책 이름이나 작가 이름 검색하세요"
         ></input>
-        <Button>책 추가하기</Button>
+        <Button
+          onClick={() => {
+            openModal('test');
+          }}
+        >
+          책 추가하기
+        </Button>
       </div>
       <div className="grid grid-cols-4 gap-10 border p-[40px] rounded-xl bg-white shadow-lg">
         {books?.slice(0, 8).map((book) => (
