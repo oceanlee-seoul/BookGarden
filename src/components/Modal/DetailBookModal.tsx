@@ -16,6 +16,7 @@ export default function DetailBookModal({ book }: { book: Book }) {
     mutationFn: deleteBook,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
+      queryClient.invalidateQueries({ queryKey: ['totalCount'] });
       alert('책이 삭제되었습니다.');
       closeModal();
     },

@@ -8,6 +8,7 @@ type ButtonProps = {
 export default function Button({
   children,
   variant = 'primary',
+  disabled = false,
   ...buttonProps
 }: ButtonProps) {
   const buttonStyles = {
@@ -19,9 +20,15 @@ export default function Button({
       'bg-[#FF4D4D] text-white hover:bg-[#FF0000] active:bg-[#D00000] rounded-xl border-none shadow-md focus:outline-none focus:ring-2 focus:ring-[#FF0000]',
   };
 
+  const disabledStyles =
+    'bg-[#E0E0E0] text-[#A0A0A0] cursor-not-allowed hover:bg-[#E0E0E0] active:bg-[#E0E0E0] focus:ring-0 rounded-xl';
+
   return (
     <button
-      className={`px-[16px] py-[10px] text-sm font-bold transition duration-300 ${buttonStyles[variant]}`}
+      className={`px-[16px] py-[10px] text-sm font-bold transition duration-300 ${
+        disabled ? disabledStyles : buttonStyles[variant]
+      }`}
+      disabled={disabled}
       {...buttonProps}
     >
       {children}

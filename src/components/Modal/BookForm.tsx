@@ -21,6 +21,7 @@ const BookForm = ({ initData }: BookFormProps) => {
     mutationFn: addBook,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
+      queryClient.invalidateQueries({ queryKey: ['totalCount'] });
       closeModal();
     },
     onError: (err) => {
