@@ -3,18 +3,7 @@ import { addBook, modifyBook } from '@/lib/axios/books';
 import { useMutation } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import useModal from '@/hooks/useModal';
-
-interface BookFormProps {
-  initData?: {
-    id?: string;
-    title: string;
-    author: string[];
-    publisher: string;
-    price: number;
-    stock: number | string;
-    description: string;
-  };
-}
+import { BookFormProps } from '@/types/books';
 
 const BookForm = ({ initData }: BookFormProps) => {
   const queryClient = useQueryClient();
@@ -63,13 +52,11 @@ const BookForm = ({ initData }: BookFormProps) => {
     };
 
     if (initData?.id) {
-      // Modify book
       modifyBookMutation({
         id: initData.id,
         ...bookData,
       });
     } else {
-      // Add new book
       addBookMutation(bookData);
     }
   };

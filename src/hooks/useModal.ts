@@ -1,13 +1,25 @@
 import modalAtom from '@/store/modalAtom';
 import { useAtom } from 'jotai';
+import { Book } from '@/types/books';
+
+type ModalType = 'addBook' | 'detailBook' | 'modifyBook';
+
+type ModalProps = {
+  addBook: object;
+  modifyBook: { book: Book };
+  detailBook: { book: Book };
+};
 
 const useModal = () => {
   const [modalState, setModalState] = useAtom(modalAtom);
 
-  const openModal = (modalType: string, modalProps?: object) => {
+  const openModal = <T extends ModalType>(
+    modalType: T,
+    modalProps?: ModalProps[T]
+  ) => {
     setModalState({
       modalType,
-      modalProps: modalProps || {},
+      modalProps: modalProps || ({} as ModalProps[T]),
     });
   };
 
