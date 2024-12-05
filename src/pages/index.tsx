@@ -39,7 +39,18 @@ export default function Home() {
       <div className="max-w-[1200px] mx-auto">
         <Header openModal={() => openModal('addBook')} />
         <SkeletonGrid pageSize={pageSize} />
-        <PaginationSkeleton />
+        <PaginationSkeleton totalPages={totalPages} />
+      </div>
+    );
+  }
+
+  if (errorBooks || errorCount) {
+    return (
+      <div className="max-w-[1200px] mx-auto">
+        <Header openModal={() => openModal('addBook')} />
+        <div className="text-center text-red-500">
+          {errorBooks?.message || errorCount?.message || 'Error occurred.'}
+        </div>
       </div>
     );
   }
@@ -92,27 +103,27 @@ export default function Home() {
       </div>
     );
   }
-}
 
-function PaginationSkeleton() {
-  return (
-    <div className="flex justify-center gap-5 mt-5">
-      <Button variant="secondary" disabled>
-        {'<'}
-      </Button>
+  function PaginationSkeleton({ totalPages }: { totalPages: number }) {
+    return (
+      <div className="flex justify-center gap-5 mt-5">
+        <Button variant="secondary" disabled>
+          {'<'}
+        </Button>
 
-      <div className="flex gap-2">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <div
-            key={index}
-            className="w-[40px] h-[40px] rounded-xl bg-gray-200 animate-pulse"
-          ></div>
-        ))}
+        <div className="flex gap-2">
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <div
+              key={index}
+              className="w-[40px] h-[40px] rounded-xl bg-gray-200 animate-pulse"
+            ></div>
+          ))}
+        </div>
+
+        <Button variant="secondary" disabled>
+          {'>'}
+        </Button>
       </div>
-
-      <Button variant="secondary" disabled>
-        {'>'}
-      </Button>
-    </div>
-  );
+    );
+  }
 }
