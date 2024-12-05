@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import useModal from '@/hooks/useModal';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteBook } from '@/lib/axios/books';
 
 type Book = {
   title: string;
@@ -19,6 +22,8 @@ interface DetailBookModalProps {
 
 export default function DetailBookModal({ book }: DetailBookModalProps) {
   const [isEdited, setIsEdited] = useState(false);
+  const { openModal, closeModal } = useModal();
+  const queryClient = useQueryClient();
 
   // 수정된 상태를 확인하기 위해 created_at과 updated_at 비교
   useEffect(() => {
@@ -28,12 +33,26 @@ export default function DetailBookModal({ book }: DetailBookModalProps) {
   }, [book]);
 
   const handleEditClick = () => {
-    // onEdit(book); // 수정 버튼 클릭 시 onEdit 함수 호출
+    openModal('modifyBook', { book });
   };
+
+  // useMutation으로 deleteBook 함수 사용
+  const { mutate: mutateDelete } = useMutation({
+    mutationFn: deleteBook,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] }); // 책 목록 새로고침
+      alert('책이 삭제되었습니다.');
+      closeModal();
+    },
+    onError: (error) => {
+      console.error('삭제 오류:', error);
+      alert('삭제 중 오류가 발생했습니다.');
+    },
+  });
 
   const handleDeleteClick = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      // onDelete(book.id); // 삭제 버튼 클릭 시 onDelete 함수 호출
+      mutateDelete(book.id.toString()); // 삭제 요청
     }
   };
 

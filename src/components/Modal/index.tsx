@@ -2,6 +2,7 @@ import useModal from '@/hooks/useModal';
 import { useEffect, useRef } from 'react';
 import AddBookModal from './AddBookModal';
 import DetailBookModal from './DetailBookModal';
+import ModifyBookModal from './ModifyBookModal';
 
 export default function ModalProvider() {
   const { modalState, closeModal } = useModal();
@@ -27,6 +28,7 @@ export default function ModalProvider() {
   const modalComponents: Record<string, React.ElementType> = {
     addBook: AddBookModal,
     detailBook: DetailBookModal,
+    modifyBook: ModifyBookModal,
   };
 
   const SpecificModal = modalType ? modalComponents[modalType] : null;
