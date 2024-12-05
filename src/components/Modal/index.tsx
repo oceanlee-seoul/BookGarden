@@ -8,6 +8,7 @@ export default function ModalProvider() {
   const { modalState, closeModal } = useModal();
   const { modalType, modalProps } = modalState;
   const overlayRef = useRef<HTMLDivElement>(null);
+
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal();
@@ -32,8 +33,6 @@ export default function ModalProvider() {
   };
 
   const SpecificModal = modalType ? modalComponents[modalType] : null;
-
-  if (!SpecificModal) return null;
 
   return (
     SpecificModal && (

@@ -1,4 +1,10 @@
 import axiosInstance from '.';
+import { Book } from '@/types/books';
+
+export const getBooks = async (): Promise<Book[]> => {
+  const response = await axiosInstance.get('/books');
+  return response.data;
+};
 
 export const addBook = async (bookData: {
   title: string;

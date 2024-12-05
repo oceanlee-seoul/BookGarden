@@ -1,46 +1,21 @@
-import { useState, useEffect } from 'react';
 import useModal from '@/hooks/useModal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBook } from '@/lib/axios/books';
+import { Book } from '@/types/books';
+import Button from '@/components/Button';
 
-type Book = {
-  title: string;
-  author: string[];
-  publisher: string;
-  price: number;
-  stock: number | null;
-  description: string | null;
-  created_at: string;
-  updated_at: string;
-  image_url: string | null;
-  id: number;
-};
-
-interface DetailBookModalProps {
-  book: Book;
-}
-
-export default function DetailBookModal({ book }: DetailBookModalProps) {
-  const [isEdited, setIsEdited] = useState(false);
+export default function DetailBookModal({ book }: { book: Book }) {
   const { openModal, closeModal } = useModal();
   const queryClient = useQueryClient();
-
-  // 수정된 상태를 확인하기 위해 created_at과 updated_at 비교
-  useEffect(() => {
-    if (book.created_at !== book.updated_at) {
-      setIsEdited(true);
-    }
-  }, [book]);
 
   const handleEditClick = () => {
     openModal('modifyBook', { book });
   };
 
-  // useMutation으로 deleteBook 함수 사용
   const { mutate: mutateDelete } = useMutation({
     mutationFn: deleteBook,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books'] }); // 책 목록 새로고침
+      queryClient.invalidateQueries({ queryKey: ['books'] });
       alert('책이 삭제되었습니다.');
       closeModal();
     },
@@ -52,7 +27,7 @@ export default function DetailBookModal({ book }: DetailBookModalProps) {
 
   const handleDeleteClick = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      mutateDelete(book.id.toString()); // 삭제 요청
+      mutateDelete(book.id.toString());
     }
   };
 
@@ -102,27 +77,19 @@ export default function DetailBookModal({ book }: DetailBookModalProps) {
       </div>
 
       {/* 수정됨 표시 */}
-      {isEdited && (
+      {book.created_at !== book.updated_at && (
         <div className="text-xs text-gray-500 mt-2 text-right">수정됨</div>
       )}
 
       {/* 버튼 영역 */}
-      <div className="flex justify-end gap-4 mt-4">
+      <div className="flex justify-end gap-2 mt-4">
         {/* 수정하기 버튼 */}
-        <button
-          onClick={handleEditClick}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
-        >
-          수정하기
-        </button>
+        <Button onClick={handleEditClick}>수정하기</Button>
 
         {/* 삭제하기 버튼 */}
-        <button
-          onClick={handleDeleteClick}
-          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-500"
-        >
+        <Button variant="negative" onClick={handleDeleteClick}>
           삭제하기
-        </button>
+        </Button>
       </div>
     </div>
   );
