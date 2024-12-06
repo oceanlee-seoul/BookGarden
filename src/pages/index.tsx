@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getBooks, getTotalCount } from '@/lib/axios/books';
-import { useState } from 'react';
 import Pagination from '@/components/Pagination';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import ActionBar from '@/components/ActionBar';
@@ -10,21 +9,25 @@ import BooksContainer from '@/components/BooksContainer';
 export default function Home() {
   const [page, setPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
+  const [prevSearchQuery, setPrevSearchQuery] = useState('');
   const pageSize = 8;
 
   const {
     data: totalCount = 0,
     isLoading: isLoadingCount,
     error: errorCount,
+    refetch: refetchCount,
   } = useQuery({
     queryKey: ['totalCount'],
     queryFn: () => getTotalCount(searchQuery),
+    enabled: !!searchQuery || !searchQuery,
   });
 
   const {
     data: { data: books = [] } = {},
     isLoading: isLoadingBooks,
     error: errorBooks,
+    refetch: refetchBooks,
   } = useQuery({
     queryKey: ['books', page],
     queryFn: () => getBooks(page, pageSize, searchQuery),
@@ -32,11 +35,26 @@ export default function Home() {
   });
 
   const totalPages = Math.max(Math.ceil(totalCount / pageSize), 1);
+
   const handlePageChange = (newPage: number) => setPage(newPage);
+
+  const handleSearchSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      setPrevSearchQuery(searchQuery);
+      if (searchQuery !== prevSearchQuery) {
+        refetchCount();
+        refetchBooks();
+      }
+    }
+  };
 
   return (
     <div className="max-w-[1200px] mx-auto">
-      <ActionBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <ActionBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        handleSearchSubmit={handleSearchSubmit}
+      />
       <ErrorBoundary
         fallback={
           <ErrorFallback errorBooks={errorBooks} errorCount={errorCount} />
