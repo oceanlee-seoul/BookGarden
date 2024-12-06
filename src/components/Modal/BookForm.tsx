@@ -3,15 +3,15 @@ import { addBook, modifyBook } from '@/lib/axios/books';
 import { useMutation } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import useModal from '@/hooks/useModal';
-import { BookFormProps } from '@/types/books';
 import Button from '@/components/Button';
+import { Book } from '@/types/books';
 
-const BookForm = ({ initData }: BookFormProps) => {
+const BookForm = ({ initData }: { initData?: Book }) => {
   const queryClient = useQueryClient();
   const { closeModal } = useModal();
 
   const [title, setTitle] = useState(initData?.title || '');
-  const [author, setAuthor] = useState(initData?.author.join(', ') || '');
+  const [author, setAuthor] = useState(initData?.author || '');
   const [publisher, setPublisher] = useState(initData?.publisher || '');
   const [price, setPrice] = useState<number | string>(initData?.price || '');
   const [stock, setStock] = useState<number | string>(initData?.stock || '');
@@ -42,11 +42,10 @@ const BookForm = ({ initData }: BookFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const authors = author.split(',').map((item) => item.trim());
 
     const bookData = {
       title,
-      author: authors,
+      author,
       publisher,
       price: Number(price),
       stock: Number(stock),
