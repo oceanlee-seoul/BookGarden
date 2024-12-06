@@ -6,18 +6,31 @@ interface GetBooksResponse {
   totalCount: number;
 }
 
-export const getTotalCount = async () => {
-  const response = await axiosInstance.get('/books/count');
+export const getTotalCount = async (searchQuery?: string) => {
+  const requestUrl = searchQuery
+    ? `/books/count?search=${searchQuery}`
+    : '/books/count';
+
+  console.log('requestURL', requestUrl);
+
+  const response = await axiosInstance.get(requestUrl);
+
+  console.log('THIS IS AXIOS, ', response.data);
+
   return response.data.totalCount;
 };
 
 export const getBooks = async (
   page: number,
-  pageSize: number
+  pageSize: number,
+  searchQuery?: string
 ): Promise<GetBooksResponse> => {
-  const response = await axiosInstance.get(
-    `/books?page=${page}&pageSize=${pageSize}`
-  );
+  const requestUrl = searchQuery
+    ? `/books?page=${page}&pageSize=${pageSize}&search=${searchQuery}`
+    : `/books?page=${page}&pageSize=${pageSize}`;
+
+  const response = await axiosInstance.get(requestUrl);
+
   return response.data;
 };
 

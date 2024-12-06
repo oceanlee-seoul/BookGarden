@@ -9,7 +9,8 @@ import BooksContainer from '@/components/BooksContainer';
 
 export default function Home() {
   const [page, setPage] = useState(1);
-  const pageSize = 4;
+  const [searchQuery, setSearchQuery] = useState('');
+  const pageSize = 8;
 
   const {
     data: totalCount = 0,
@@ -17,7 +18,7 @@ export default function Home() {
     error: errorCount,
   } = useQuery({
     queryKey: ['totalCount'],
-    queryFn: getTotalCount,
+    queryFn: () => getTotalCount(searchQuery),
   });
 
   const {
@@ -26,7 +27,7 @@ export default function Home() {
     error: errorBooks,
   } = useQuery({
     queryKey: ['books', page],
-    queryFn: () => getBooks(page, pageSize),
+    queryFn: () => getBooks(page, pageSize, searchQuery),
     enabled: !!totalCount,
   });
 
@@ -35,7 +36,7 @@ export default function Home() {
 
   return (
     <div className="max-w-[1200px] mx-auto">
-      <ActionBar />
+      <ActionBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <ErrorBoundary
         fallback={
           <ErrorFallback errorBooks={errorBooks} errorCount={errorCount} />
