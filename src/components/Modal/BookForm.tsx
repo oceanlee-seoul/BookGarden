@@ -3,10 +3,10 @@ import { addBook, modifyBook } from '@/lib/axios/books';
 import { useMutation } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import useModal from '@/hooks/useModal';
-import { BookFormProps } from '@/types/books';
 import Button from '@/components/Button';
+import { Book } from '@/types/books';
 
-const BookForm = ({ initData }: BookFormProps) => {
+const BookForm = ({ initData }: { initData?: Book }) => {
   const queryClient = useQueryClient();
   const { closeModal } = useModal();
 
@@ -42,7 +42,6 @@ const BookForm = ({ initData }: BookFormProps) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const authors = author.split(',').map((item) => item.trim());
 
     const bookData = {
       title,

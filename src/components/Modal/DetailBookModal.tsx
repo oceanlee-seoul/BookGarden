@@ -28,7 +28,7 @@ export default function DetailBookModal({ book }: { book: Book }) {
 
   const handleDeleteClick = () => {
     if (window.confirm('정말 삭제하시겠습니까?')) {
-      mutateDelete(book.id.toString());
+      mutateDelete(book.id);
     }
   };
 
@@ -59,7 +59,9 @@ export default function DetailBookModal({ book }: { book: Book }) {
         {/* 가격 */}
         <div className="flex-1">
           <h3 className="font-medium text-gray-700">가격</h3>
-          <p className="text-gray-800">{book.price.toLocaleString()}원</p>
+          <p className="text-gray-800">
+            {book.price ? book.price.toLocaleString() + '원' : '가격 정보 없음'}
+          </p>
         </div>
 
         {/* 수량 */}

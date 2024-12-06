@@ -41,7 +41,7 @@ export type Database = {
           description: string | null;
           id: number;
           image_url: string | null;
-          price: number;
+          price: number | null;
           publisher: string;
           stock: number | null;
           title: string;
@@ -53,7 +53,7 @@ export type Database = {
           description?: string | null;
           id?: number;
           image_url?: string | null;
-          price: number;
+          price?: number | null;
           publisher: string;
           stock?: number | null;
           title: string;
@@ -65,7 +65,7 @@ export type Database = {
           description?: string | null;
           id?: number;
           image_url?: string | null;
-          price?: number;
+          price?: number | null;
           publisher?: string;
           stock?: number | null;
           title?: string;

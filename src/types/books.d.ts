@@ -1,14 +1,16 @@
 import { Tables } from '@/types/supabase';
 export type Book = Tables<'books'>;
 
-export interface BookFormProps {
-  initData?: {
-    id?: string;
-    title: string;
-    author: string;
-    publisher: string;
-    price: number;
-    stock: number | string;
-    description: string;
-  };
+export interface PostBooks {
+  title: string;
+  author: string;
+  publisher: string;
+  description?: string;
+  price?: number;
+  stock?: number;
+  image_url?: string;
+}
+
+export interface PutBooks extends PostBooks {
+  id: number;
 }
