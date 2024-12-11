@@ -7,12 +7,13 @@ export default async function handler(
 ) {
   const { id } = req.query;
 
-  if (req.method === 'PATCH') {
+  if (req.method === 'PUT') {
     if (!id) {
       return res.status(400).json({ message: 'Book ID is required' });
     }
 
-    const { title, author, publisher, price, stock, description } = req.body;
+    const { title, author, publisher, price, stock, description, imageUrl } =
+      req.body;
 
     const { data, error } = await supabase
       .from('books')
@@ -23,6 +24,7 @@ export default async function handler(
         price,
         stock,
         description,
+        image_url: imageUrl,
         updated_at: new Date().toISOString(), // 수정된 날짜 업데이트
       })
       .eq('id', id)
