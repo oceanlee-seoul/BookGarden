@@ -15,13 +15,16 @@ export default function BookCard({ book }: { book: Book }) {
       className="relative w-full pb-[147%] group"
     >
       <Image
-        src="/james.jpg"
-        alt="book"
+        src={
+          book.image_url
+            ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/image/${book.image_url}`
+            : '/default-cover.png'
+        }
+        alt={book.title || '기본 표지 이미지'}
         fill
         className="object-cover"
         sizes="(max-width: 640px) 100vw, 25vw"
       />
-
       <div className="absolute inset-0 bg-gray-900 bg-opacity-80 opacity-0 transition-opacity duration-300 flex flex-col items-center justify-center text-white group-hover:opacity-100">
         <h1 className="text-lg font-bold">{book.title}</h1>
         <h2 className="text-sm mb-[20px]">{book.author}</h2>

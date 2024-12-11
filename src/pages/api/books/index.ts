@@ -82,7 +82,8 @@ export default async function handler(
 
     res.status(200).json({ data });
   } else if (req.method === 'POST') {
-    const { title, author, publisher, price, stock, description } = req.body;
+    const { title, author, publisher, price, stock, description, imageUrl } =
+      req.body;
 
     const { data, error } = await supabase.from('books').insert([
       {
@@ -92,6 +93,7 @@ export default async function handler(
         price,
         stock,
         description,
+        image_url: imageUrl,
       },
     ]);
 
