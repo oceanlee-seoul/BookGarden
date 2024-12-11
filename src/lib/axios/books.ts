@@ -11,11 +11,7 @@ export const getTotalCount = async (searchQuery?: string) => {
     ? `/books/count?search=${searchQuery}`
     : '/books/count';
 
-  console.log('requestURL', requestUrl);
-
   const response = await axiosInstance.get(requestUrl);
-
-  console.log('THIS IS AXIOS, ', response.data);
 
   return response.data.totalCount;
 };
@@ -35,6 +31,7 @@ export const getBooks = async (
 };
 
 export const addBook = async (bookData: PostBooks) => {
+  console.log('bookData: ', bookData);
   const response = await axiosInstance.post('/books', bookData);
   return response.data;
 };

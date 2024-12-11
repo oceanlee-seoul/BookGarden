@@ -1,21 +1,26 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { addBook, modifyBook } from '@/lib/axios/books';
 import { useMutation } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import useModal from '@/hooks/useModal';
 import Button from '@/components/Button';
 import { Book } from '@/types/books';
+import supabase from '@/lib/supabase';
 
 const BookForm = ({ initData }: { initData?: Book }) => {
   const queryClient = useQueryClient();
   const { closeModal } = useModal();
 
+  const [image, setImage] = useState<File | null>(null);
   const [title, setTitle] = useState(initData?.title || '');
   const [author, setAuthor] = useState(initData?.author || '');
   const [publisher, setPublisher] = useState(initData?.publisher || '');
   const [price, setPrice] = useState<number | string>(initData?.price || '');
   const [stock, setStock] = useState<number | string>(initData?.stock || '');
   const [description, setDescription] = useState(initData?.description || '');
+  const [imageUrl, setImageUrl] = useState<string | null>(
+    initData?.image_url || null
+  );
 
   const { mutate: addBookMutation } = useMutation({
     mutationFn: addBook,
@@ -40,8 +45,26 @@ const BookForm = ({ initData }: { initData?: Book }) => {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+    setImage(file);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    let uploadedImageUrl = imageUrl;
+
+    if (image) {
+      const fileName = `${Date.now()}-${image.name}`;
+      const { data, error } = await supabase.storage
+        .from('image')
+        .upload(fileName, image);
+      if (error) {
+        console.error('이미지 업로드 실패: ', error);
+      }
+      uploadedImageUrl = data?.path || '';
+    }
 
     const bookData = {
       title,
@@ -50,6 +73,7 @@ const BookForm = ({ initData }: { initData?: Book }) => {
       price: Number(price),
       stock: Number(stock),
       description,
+      imageUrl: uploadedImageUrl,
     };
 
     if (initData?.id) {
@@ -172,6 +196,22 @@ const BookForm = ({ initData }: { initData?: Book }) => {
           onChange={(e) => setDescription(e.target.value)}
           className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:ring-gray-900 focus:border-gray-900"
         ></textarea>
+      </div>
+
+      <div>
+        <label
+          htmlFor="imageInput"
+          className="block text-sm font-medium text-gray-700"
+        >
+          표지 사진 등록
+        </label>
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="my-2"
+        />
       </div>
 
       {/* 제출 버튼 */}

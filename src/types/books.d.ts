@@ -8,7 +8,7 @@ export interface PostBooks {
   description?: string;
   price?: number;
   stock?: number;
-  image_url?: string;
+  image_url?: string | null;
 }
 
 export interface PutBooks extends PostBooks {
