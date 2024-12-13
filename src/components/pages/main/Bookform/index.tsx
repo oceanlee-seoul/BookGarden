@@ -18,9 +18,9 @@ const BookForm = ({ initData }: { initData?: Book }) => {
   const [price, setPrice] = useState<number | string>(initData?.price || '');
   const [stock, setStock] = useState<number | string>(initData?.stock || '');
   const [description, setDescription] = useState(initData?.description || '');
-  const [imageUrl, setImageUrl] = useState<string | null>(
-    initData?.image_url || null
-  );
+  // const [imageUrl, setImageUrl] = useState<string | null>(
+  //   initData?.image_url || null
+  // );
 
   const { mutate: addBookMutation } = useMutation({
     mutationFn: addBook,
@@ -53,7 +53,7 @@ const BookForm = ({ initData }: { initData?: Book }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    let uploadedImageUrl = imageUrl;
+    let uploadedImageUrl = '';
 
     if (image) {
       const fileName = `${Date.now()}-${image.name}`;
