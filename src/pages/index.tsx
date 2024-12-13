@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getBooks, getTotalCount } from '@/lib/axios/books';
-import Pagination from '@/components/Pagination';
-import ErrorBoundary from '@/components/ErrorBoundary';
-import ActionBar from '@/components/ActionBar';
-import BooksContainer from '@/components/BooksContainer';
+import Pagination from '@/components/common/Pagination';
+import ErrorBoundary from '@/components/common/ErrorBoundary';
+import ActionBar from '@/components/pages/main/ActionBar';
+import BooksContainer from '@/components/pages/main/BooksContainer';
 
 export default function Home() {
   const [page, setPage] = useState(1);

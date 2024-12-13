@@ -2,7 +2,7 @@ import useModal from '@/hooks/useModal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBook } from '@/lib/axios/books';
 import { Book } from '@/types/books';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 
 export default function DetailBookModal({ book }: { book: Book }) {
   const { openModal, closeModal } = useModal();

@@ -1,4 +1,4 @@
-import BookForm from './BookForm';
+import BookForm from '../../pages/main/Bookform';
 
 export default function AddBookModal() {
   return (

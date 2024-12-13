@@ -3,7 +3,7 @@ import { addBook, modifyBook } from '@/lib/axios/books';
 import { useMutation } from '@tanstack/react-query';
 import { useQueryClient } from '@tanstack/react-query';
 import useModal from '@/hooks/useModal';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
 import { Book } from '@/types/books';
 import supabase from '@/lib/supabase';
 

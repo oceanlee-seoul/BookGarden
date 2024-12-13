@@ -1,6 +1,6 @@
 import { Book } from '@/types/books';
-import BookCard from '@/components/BookCard';
-import BookCardSkeleton from '@/components/BookCard/BookCardSkeleton';
+import BookCard from '@/components/pages/main/BookCard';
+import BookCardSkeleton from '@/components/pages/main/BookCard/BookCardSkeleton';
 
 export default function BooksContainer({
   books,
