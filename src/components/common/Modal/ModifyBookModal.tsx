@@ -1,4 +1,4 @@
-import BookForm from './BookForm';
+import BookForm from '../../pages/main/Bookform';
 import { Book } from '@/types/books';
 
 export default function ModifyBookModal({ book }: { book: Book }) {

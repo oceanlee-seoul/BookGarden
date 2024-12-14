@@ -2,10 +2,12 @@ import useModal from '@/hooks/useModal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBook } from '@/lib/axios/books';
 import { Book } from '@/types/books';
-import Button from '@/components/Button';
+import Button from '@/components/common/Button';
+import useToast from '@/hooks/useToast';
 
 export default function DetailBookModal({ book }: { book: Book }) {
   const { openModal, closeModal } = useModal();
+  const { showToast } = useToast();
   const queryClient = useQueryClient();
 
   const handleEditClick = () => {
@@ -17,12 +19,12 @@ export default function DetailBookModal({ book }: { book: Book }) {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
       queryClient.invalidateQueries({ queryKey: ['totalCount'] });
-      alert('책이 삭제되었습니다.');
+      showToast('success', '책이 삭제 되었습니다.');
       closeModal();
     },
     onError: (error) => {
       console.error('삭제 오류:', error);
-      alert('삭제 중 오류가 발생했습니다.');
+      showToast('error', '책 삭제를 실패했습니다.');
     },
   });
 
