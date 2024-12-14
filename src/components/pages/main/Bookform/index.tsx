@@ -6,10 +6,12 @@ import useModal from '@/hooks/useModal';
 import Button from '@/components/common/Button';
 import { Book } from '@/types/books';
 import supabase from '@/lib/supabase';
+import useToast from '@/hooks/useToast';
 
 const BookForm = ({ initData }: { initData?: Book }) => {
   const queryClient = useQueryClient();
   const { closeModal } = useModal();
+  const { showToast } = useToast();
 
   const [image, setImage] = useState<File | null>(null);
   const [title, setTitle] = useState(initData?.title || '');
@@ -28,9 +30,11 @@ const BookForm = ({ initData }: { initData?: Book }) => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
       queryClient.invalidateQueries({ queryKey: ['totalCount'] });
       closeModal();
+      showToast('success', '책 생성을 성공했습니다.');
     },
     onError: (err) => {
       console.error(err);
+      showToast('error', '책 생성을 실패했습니다.');
     },
   });
 
@@ -39,9 +43,11 @@ const BookForm = ({ initData }: { initData?: Book }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
       closeModal();
+      showToast('success', '책 정보 수정을 성공했습니다.');
     },
     onError: (err) => {
       console.error(err);
+      showToast('error', '책 정보 수정을 실패했습니다.');
     },
   });
 

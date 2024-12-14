@@ -2,13 +2,17 @@ import toastAtom from '@/store/toastAtom';
 import { useAtom } from 'jotai';
 
 const useToast = () => {
-  const [, setToastState] = useAtom(toastAtom);
+  const [toastState, setToastState] = useAtom(toastAtom);
 
   const showToast = (toastType: 'success' | 'error', toastMessage: string) => {
-    setToastState({ toastProps: { toastType, toastMessage } });
-    setTimeout(() => setToastState({ toastProps: null }));
+    setToastState({ toastType, toastMessage });
+
+    setTimeout(() => {
+      setToastState({ toastType: null, toastMessage: null });
+    }, 4000);
   };
-  return { showToast };
+
+  return { toastState, showToast };
 };
 
 export default useToast;

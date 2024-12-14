@@ -1,16 +1,13 @@
 import { atom } from 'jotai';
 
-interface ToastProps {
-  toastType: 'success' | 'error';
-  toastMessage: string;
-}
-
 interface ToastState {
-  toastProps: ToastProps | null;
+  toastType: 'success' | 'error' | null;
+  toastMessage: string | null;
 }
 
 const toastAtom = atom<ToastState>({
-  toastProps: null,
+  toastType: null,
+  toastMessage: null,
 });
 
 export default toastAtom;
