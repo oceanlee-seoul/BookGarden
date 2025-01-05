@@ -9,6 +9,8 @@ import supabase from '@/lib/supabase';
 import useToast from '@/hooks/useToast';
 import { useForm } from 'react-hook-form';
 import Input from '@/components/common/Input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { bookSchema } from '@/lib/zod-schema/book.schema';
 
 type BookFormData = {
   title: string;
@@ -29,8 +31,11 @@ const BookForm = ({ initData }: { initData?: Book }) => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<BookFormData>({
+    resolver: zodResolver(bookSchema),
+    mode: 'onChange',
+    reValidateMode: 'onBlur',
     defaultValues: {
       title: initData?.title || '',
       author: initData?.author || '',
@@ -133,7 +138,7 @@ const BookForm = ({ initData }: { initData?: Book }) => {
             label="가격"
             errorMessage={errors.price?.message}
             type="number"
-            register={register('price')}
+            register={register('price', { valueAsNumber: true })}
           />
         </div>
 
@@ -143,7 +148,7 @@ const BookForm = ({ initData }: { initData?: Book }) => {
             label="수량"
             errorMessage={errors.stock?.message}
             type="number"
-            register={register('stock')}
+            register={register('stock', { valueAsNumber: true })}
           />
         </div>
       </div>
@@ -178,7 +183,9 @@ const BookForm = ({ initData }: { initData?: Book }) => {
         />
       </div>
       <div className="mt-6 flex justify-end">
-        <Button type="submit">{initData ? '수정하기' : '추가하기'}</Button>
+        <Button type="submit" disabled={!isValid}>
+          {initData ? '수정하기' : '추가하기'}
+        </Button>
       </div>
     </form>
   );
