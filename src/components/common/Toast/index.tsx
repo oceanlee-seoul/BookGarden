@@ -17,7 +17,7 @@ export default function ToastProvider() {
   return (
     <div
       className={`fixed left-[50%] transform -translate-x-1/2 px-6 py-3 rounded-md 
-        transition-all duration-500 ease-out 
+        transition-all duration-500 ease-out z-20
         ${
           isVisible
             ? '-translate-x-1/2 translate-y-[0]'

@@ -18,7 +18,7 @@ export default function BookCard({ book }: { book: Book }) {
         src={
           book.image_url
             ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/image/${book.image_url}`
-            : '/default-cover.png'
+            : '/images/default-cover.png'
         }
         alt={book.title || '기본 표지 이미지'}
         fill

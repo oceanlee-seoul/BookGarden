@@ -49,7 +49,7 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-[1200px] mx-auto">
+    <div className="max-w-[1200px] mx-auto pt-[100px]">
       <ActionBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
