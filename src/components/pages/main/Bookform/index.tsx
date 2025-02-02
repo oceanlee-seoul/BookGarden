@@ -12,7 +12,7 @@ import Input from '@/components/common/Input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { bookSchema } from '@/lib/zod-schema/book.schema';
 
-type BookFormData = {
+type BookFormDataType = {
   title: string;
   author: string;
   publisher: string;
@@ -32,7 +32,7 @@ const BookForm = ({ initData }: { initData?: Book }) => {
     handleSubmit,
     setValue,
     formState: { errors, isValid },
-  } = useForm<BookFormData>({
+  } = useForm<BookFormDataType>({
     resolver: zodResolver(bookSchema),
     mode: 'onChange',
     reValidateMode: 'onBlur',
@@ -79,7 +79,7 @@ const BookForm = ({ initData }: { initData?: Book }) => {
     setValue('image', file);
   };
 
-  const onSubmit = async (data: BookFormData) => {
+  const onSubmit = async (data: BookFormDataType) => {
     let uploadedImageUrl = '';
 
     if (data.image) {
