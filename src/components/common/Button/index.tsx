@@ -13,7 +13,7 @@ export default function Button({
 }: ButtonProps) {
   const buttonStyles = {
     primary:
-      'bg-[#007BFF] text-white hover:bg-[#0056b3] active:bg-[#004085] rounded-xl border-none shadow-md focus:outline-none focus:ring-2 focus:ring-[#0056b3]',
+      'bg-primary text-white hover:bg-primary-hover active:bg-primary-active rounded-xl border-none shadow-md focus:outline-none focus:ring-2 focus:ring-focus-ring',
     secondary:
       'bg-white text-[#333] border border-[#E0E0E0] hover:bg-[#e1e1e1] active:bg-[#E0E0E0] rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#C7C7C7]',
     negative:
